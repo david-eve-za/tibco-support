@@ -7,21 +7,20 @@ import org.jooq.util.jaxb.Generator;
 import org.jooq.util.jaxb.Jdbc;
 import org.jooq.util.jaxb.Target;
 
-
 public class JOOQGenerator {
 	public JOOQGenerator() {
 		Configuration config = new Configuration()
-				.withJdbc(
-						new Jdbc().withDriver("org.h2.Driver")
-								.withUrl("jdbc:h2:file:./LocalDB;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=TRUE;MVCC=TRUE")
-								.withUser(
-										"root")
-								.withPassword("toor"))
+				.withJdbc(new Jdbc().withDriver("org.h2.Driver")
+						.withUrl("jdbc:h2:file:./LocalDB;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=TRUE;MVCC=TRUE")
+						.withUser("root").withPassword("toor"))
 				.withGenerator(new Generator()
-						.withDatabase(new Database().withName("org.jooq.util.h2.H2Database").withIncludes(".*")
-								.withExcludes("").withInputSchema("PUBLIC"))
-						.withTarget(new Target().withPackageName("org.citi.model.ddl")
-								.withDirectory("target/jooq")));
+						.withDatabase(new Database().withIncludeTables(true).withIncludeRoutines(true)
+								.withIncludePackages(true).withIncludeUDTs(true).withIncludeSequences(true)
+								.withIncludePrimaryKeys(true).withIncludeForeignKeys(true).withIncludeUniqueKeys(true)
+								.withName("org.jooq.util.h2.H2Database").withExcludes("")
+								// .withInputSchema("INFORMATION_SCHEMA")
+								.withInputSchema("PUBLIC"))
+						.withTarget(new Target().withPackageName("org.citi.model.ddl").withDirectory("target/jooq")));
 
 		try {
 			GenerationTool.generate(config);

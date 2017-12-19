@@ -98,7 +98,7 @@ public class JOOQUtil {
 			if (!item.getKeys().isEmpty()) {
 				for (UniqueKey<?> key : item.getKeys()) {
 					if (key.isPrimary()) {
-						constraints.add(constraint(key.getName()).primaryKey(key.getFieldsArray()));
+ 						constraints.add(constraint(key.getName()).primaryKey(key.getFieldsArray()));
 					}
 					if (!key.isPrimary()) {
 						constraints.add(constraint(key.getName()).unique(key.getFieldsArray()));
